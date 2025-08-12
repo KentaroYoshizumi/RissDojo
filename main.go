@@ -3,56 +3,30 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
-	"math/rand"
 	"os"
 	"strings"
-	"time"
 
-	"RissDojo/questions"
+	"RissDojo/handlers"
+	"RissDojo/questions/data/vocab"
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	// 今回はvocabカテゴリーの1問目
+	q := vocab.ShortAnswerQuestions[0]
 
-	categoryMap := map[string]string{
-		"1": "am1",
-		"2": "am2",
-		"3": "pm",
-	}
-
-	fmt.Println("出題カテゴリを選んでください:")
-	fmt.Println("1: 午前Ⅰ")
-	fmt.Println("2: 午前Ⅱ")
-	fmt.Println("3: 午後")
-	fmt.Print("番号を入力: ")
+	fmt.Println("問題:", q.Question)
+	fmt.Print("解答を入力してください: ")
 
 	reader := bufio.NewReader(os.Stdin)
-	input, _ := reader.ReadString('\n')
-	input = strings.TrimSpace(input)
+	userAnswer, _ := reader.ReadString('\n')
+	userAnswer = strings.TrimSpace(userAnswer)
 
-	category, ok := categoryMap[input]
-	if !ok {
-		fmt.Println("⚠️ 無効な入力です。終了します。")
-		return
-	}
-
-	mcqs, err := questions.LoadCategoryQuestions(category)
+	// AIで採点
+	result, err := handlers.JudgeShortAnswer(q, userAnswer)
 	if err != nil {
-		log.Fatal("❌ 問題の読み込みに失敗:", err)
-	}
-	if len(mcqs) == 0 {
-		fmt.Println("⚠️ このカテゴリには問題が登録されていません。")
+		fmt.Println("採点エラー:", err)
 		return
 	}
 
-	q := mcqs[rand.Intn(len(mcqs))]
-
-	fmt.Println("\n📝 問題:", q.Question)
-	fmt.Println("選択肢:")
-	for i, c := range q.Options {
-		fmt.Printf("%s. %s\n", []string{"ア", "イ", "ウ", "エ"}[i], c)
-	}
-	fmt.Printf("✅ 正解: %s\n", q.Answer)
-	fmt.Println("💡 解説:", q.Explain)
+	fmt.Println("採点結果:", result)
 }
