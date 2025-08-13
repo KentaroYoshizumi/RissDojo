@@ -1,0 +1,7 @@
+{
+  "id": 2014,
+  "question": "「WAF」とは何ですか？簡潔に説明してください。",
+  "answer": "Web Application Firewall。HTTP(S)トラフィックを解析し、アプリ層の攻撃を検出・遮断する防御装置。",
+  "explanation": "シグネチャ/ルール/学習型等の方式があり、XSSやSQLiなどの攻撃パターンを軽減します。",
+  "category": "vocab"
+}

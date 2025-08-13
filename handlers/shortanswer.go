@@ -2,41 +2,35 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"RissDojo/models"
-	//"github.com/openai/openai-go" // OpenAI公式Go SDK
+
+	openai "github.com/sashabaranov/go-openai"
 )
 
-func JudgeShortAnswer(q models.ShortAnswer, userAnswer string) (string, error) {
+func JudgeShortAnswer(q models.Written, userAnswer string) (string, error) {
 	client := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
+	ctx := context.Background()
 
-	prompt := fmt.Sprintf(`
-以下の模範解答とユーザーの解答を比較し、「正解」「部分的に正しい」「不正解」のいずれかで返してください。
-また、一言で理由も述べてください。
+	prompt := "問題: " + q.Question + "\n" +
+		"模範解答: " + q.Answer + "\n" +
+		"ユーザー解答: " + userAnswer + "\n" +
+		"この解答が模範解答と意味的に一致しているか、日本語で厳密に○か×で答えてください。"
 
-模範解答:
-%s
-
-ユーザーの解答:
-%s
-`, q.ModelAnswer, userAnswer)
-
-	resp, err := client.Chat.Completions.New(context.Background(), openai.ChatCompletionNewParams{
-		Model: openai.F(openai.ChatModelGPT4oMini),
-		Messages: openai.F([]openai.ChatCompletionMessageParam{
+	resp, err := client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
+		Model: "gpt-4o-mini", // もしくは "gpt-3.5-turbo"
+		Messages: []openai.ChatCompletionMessage{
 			{
-				Role: openai.F(openai.ChatCompletionMessageRoleUser),
-				Content: openai.F([]openai.ChatCompletionContentPartUnion{
-					openai.ChatCompletionContentPartText{Text: openai.F(prompt)},
-				}),
+				Role:    "user",
+				Content: prompt,
 			},
-		}),
+		},
 	})
 	if err != nil {
 		return "", err
 	}
 
-	return *resp.Choices[0].Message.Content[0].(openai.ChatCompletionContentPartText).Text, nil
+	// 返答は resp.Choices[0].Message.Content にテキストで入っている
+	return resp.Choices[0].Message.Content, nil
 }

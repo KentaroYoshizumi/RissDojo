@@ -1,0 +1,7 @@
+{
+  "id": 2012,
+  "question": "「DOM based XSS」とは何ですか？簡潔に説明してください。",
+  "answer": "サーバではなくクライアント側のDOM操作が原因で、入力値が危険な形で挿入され実行されるXSS。",
+  "explanation": "location.hash等の値をinnerHTMLに直接入れる等が典型で、DOM操作時のサニタイズが必要です。",
+  "category": "vocab"
+}

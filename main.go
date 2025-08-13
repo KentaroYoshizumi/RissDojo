@@ -7,12 +7,22 @@ import (
 	"strings"
 
 	"RissDojo/handlers"
-	"RissDojo/questions/data/vocab"
+	"RissDojo/questions"
 )
 
 func main() {
-	// 今回はvocabカテゴリーの1問目
-	q := vocab.ShortAnswerQuestions[0]
+	// 動的にvocabカテゴリーの記述式問題を読み込む
+	questions, err := questions.LoadWrittenCategory("vocab")
+	if err != nil {
+		fmt.Println("問題読み込みエラー:", err)
+		return
+	}
+	if len(questions) == 0 {
+		fmt.Println("問題がありません。")
+		return
+	}
+
+	q := questions[0]
 
 	fmt.Println("問題:", q.Question)
 	fmt.Print("解答を入力してください: ")
