@@ -1,7 +1,0 @@
-{
-  "id": 2035,
-  "question": "「APT（Advanced Persistent Threat）」とは何ですか？簡潔に説明してください。",
-  "answer": "高度で持続的・執拗に活動する標的型攻撃の総称。長期潜伏し、段階的に目的達成を狙う。",
-  "explanation": "偵察〜侵入〜横展開〜窃取まで継続的に行われ、検知・根絶が難しいのが特徴です。",
-  "category": "vocab"
-}

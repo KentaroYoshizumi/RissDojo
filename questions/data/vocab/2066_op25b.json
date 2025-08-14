@@ -1,0 +1,7 @@
+{
+  "id": 2066,
+  "question": "「OP25B（Outbound Port 25 Blocking）」とは何ですか？簡潔に説明してください。",
+  "answer": "ISP 等が送信ポート25番を遮断する措置。ボット端末からの直接 SMTP 送信を防ぐ。",
+  "explanation": "家庭内や業務端末の直接SMTP送信を阻止することでスパム抑止。",
+  "category": "vocab"
+}

@@ -1,0 +1,7 @@
+{
+  "id": 2068,
+  "question": "「RLO（Right-to-Left Override）」とは何ですか？簡潔に説明してください。",
+  "answer": "Unicode の制御文字を悪用してファイル名や表示を偽装する技術。",
+  "explanation": "ファイル名や表示の実体を確認する運用が有効。",
+  "category": "vocab"
+}
