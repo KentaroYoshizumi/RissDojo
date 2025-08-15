@@ -1,0 +1,4 @@
+{
+    "word": "DOM based XSS",
+    "description": "クライアント側で発生するXSS攻撃"
+}

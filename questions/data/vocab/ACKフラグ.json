@@ -1,0 +1,4 @@
+{
+    "word": "ACKフラグ",
+    "description": "TCP通信で応答確認を示すフラグ"
+}

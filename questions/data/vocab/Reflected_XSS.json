@@ -1,0 +1,4 @@
+{
+    "word": "Reflected XSS",
+    "description": "リクエスト反射型のXSS攻撃"
+}
