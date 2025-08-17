@@ -1,0 +1,4 @@
+{
+    "word": "AH(Authentication Header)",
+    "description": "IPsecで認証のみを行うヘッダ"
+}

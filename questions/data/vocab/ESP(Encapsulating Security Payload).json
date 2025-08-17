@@ -1,0 +1,4 @@
+{
+    "word": "ESP(Encapsulating Security Payload)",
+    "description": "IPsecで暗号化と認証を行うヘッダ"
+}
