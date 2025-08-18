@@ -1,89 +1,45 @@
 #!/bin/bash
+set -euo pipefail
 
-# 出力ディレクトリ
 OUTPUT_DIR="/Users/kentaroyoshizumi/Desktop/RissDojo/questions/data/vocab"
 mkdir -p "$OUTPUT_DIR"
 
-# 単語リスト
-WORDS=(
-"VPN"
-"暗号化"
-"認証"
-"インターネットVPN"
-"IP-VPN"
-"トランスポートモード"
-"トンネルモード"
-"ペイロード"
-"IPsec"
-"PPTP"
-"MS-CHAP2"
-"RC4"
-"SSL-VPN"
-"SDN(Software-Difined Networking)"
-"Open Flow"
-"Datapath ID"
-"フロー"
-"フローテーブル"
-"フローエントリ"
-"NFV(Network Function Virtualization)"
-"SA(Security Association)"
-"IKEフェーズ"
-"IPsecフェーズ"
-"SPI(セキュリティパレメータインデックス)"
-"ISAKMP SA"
-"メインモード"
-"アグレッシブモード"
-"クイックモード"
-"AH(Authentication Header)"
-"ESP(Encapsulating Security Payload)"
-)
-
-# 各単語に対応する説明（模範解答）
-get_description () {
-  case "$1" in
-    "VPN") echo "仮想プライベートネットワーク。インターネット上で安全に通信する仕組み" ;;
-    "暗号化") echo "通信内容を第三者に読まれないよう変換する技術" ;;
-    "認証") echo "通信相手が正しい相手であることを確認する仕組み" ;;
-    "インターネットVPN") echo "インターネット回線を利用して構築するVPN" ;;
-    "IP-VPN") echo "通信事業者の閉域網を利用するVPN方式" ;;
-    "トランスポートモード") echo "IPsecでペイロード部分のみを暗号化する方式" ;;
-    "トンネルモード") echo "IPsecでパケット全体を暗号化し新しいIPヘッダを付加する方式" ;;
-    "ペイロード") echo "通信データの実際の中身部分" ;;
-    "IPsec") echo "インターネットプロトコルの通信を暗号化・認証する仕組み" ;;
-    "PPTP") echo "古いVPNプロトコルでセキュリティが弱い" ;;
-    "MS-CHAP2") echo "Microsoftのチャレンジハンドシェイク認証プロトコル第2版" ;;
-    "RC4") echo "ストリーム暗号方式の一つだが脆弱性がある" ;;
-    "SSL-VPN") echo "SSL/TLSを用いて暗号化するVPN方式" ;;
-    "SDN(Software-Difined Networking)") echo "ネットワークをソフトウェアで集中制御する仕組み" ;;
-    "Open Flow") echo "SDNを実現するための標準プロトコル" ;;
-    "Datapath ID") echo "OpenFlowスイッチを識別するためのID" ;;
-    "フロー") echo "SDNにおける通信経路の単位" ;;
-    "フローテーブル") echo "SDNスイッチが持つフロー制御ルールの表" ;;
-    "フローエントリ") echo "フローテーブルの1行に相当する制御ルール" ;;
-    "NFV(Network Function Virtualization)") echo "ネットワーク機能を仮想化して提供する技術" ;;
-    "SA(Security Association)") echo "暗号化や認証に関する共有情報のセット" ;;
-    "IKEフェーズ") echo "IPsecで暗号鍵や認証方式を決める交渉プロセス" ;;
-    "IPsecフェーズ") echo "IKEで確立した鍵を使って実際の暗号化通信を行う段階" ;;
-    "SPI(セキュリティパレメータインデックス)") echo "SAを識別するためのID" ;;
-    "ISAKMP SA") echo "IKEで確立される鍵交換用のセキュリティアソシエーション" ;;
-    "メインモード") echo "IKEフェーズ1で行う6回の通信による認証方式" ;;
-    "アグレッシブモード") echo "IKEフェーズ1で行う3回の通信による高速だが安全性が低い認証方式" ;;
-    "クイックモード") echo "IKEフェーズ2で実際の暗号鍵を交換する方式" ;;
-    "AH(Authentication Header)") echo "IPsecで認証のみを行うヘッダ" ;;
-    "ESP(Encapsulating Security Payload)") echo "IPsecで暗号化と認証を行うヘッダ" ;;
-    *) echo "説明が未登録です" ;;
-  esac
-}
-
-# JSONファイルを作成
-for WORD in "${WORDS[@]}"; do
-  DESC=$(get_description "$WORD")
-  FILE="$OUTPUT_DIR/${WORD}.json"
-  cat <<EOF > "$FILE"
+# word|filename|description の形式で列挙して最後にEOFで閉じる
+while IFS="|" read -r word filename description; do
+  filepath="$OUTPUT_DIR/$filename"
+  cat > "$filepath" <<JSON
 {
-    "word": "$WORD",
-    "description": "$DESC"
+  "word": "$word",
+  "description": "$description"
 }
+JSON
+  echo "作成しました: $filepath"
+done <<'EOF'
+IPS(Intrusion Prevention System)|IPS.json|不正な通信を検知し、遮断まで行うシステム
+IDS(Intrusion Detection System)|IDS.json|不正アクセスを検知するシステム
+ホスト型IDS|host_based_IDS.json|特定の端末やサーバ上で動作し、不正アクセスを検知するIDS
+ネットワーク型IDS|network_based_IDS.json|ネットワークトラフィックを監視して不正を検知するIDS
+インラインモード|inline_mode.json|通信経路上に設置して不正を直接遮断する動作モード
+プロミスキャスモード|promiscuous_mode.json|全てのパケットを受信して監視するモード
+Misuse検知法|misuse_detection.json|既知の攻撃パターンに基づき不正を検知する手法
+Anomaly検知法|anomaly_detection.json|通常と異なる挙動を異常として検知する手法
+IDP(Intrusion Detection and Prevention system)|IDP.json|IDSとIPSの機能を兼ね備えたシステム
+フォールスポジティブ|false_positive.json|正常な通信を誤って攻撃と判定すること
+フォールスネガティブ|false_negative.json|攻撃を誤って正常と判定してしまうこと
+ハニーポット|honeypot.json|攻撃者を誘導して調査するための疑似システム
+コリジョンドメイン|collision_domain.json|同一ネットワークで衝突が発生する領域
+サニタイジング|sanitizing.json|入力値を安全に処理するために不要・危険な部分を除去すること
+エスケープ処理|escape_processing.json|特殊文字を無害化するための処理
+プレースホルダ|placeholder.json|SQL文などで変数部分を一時的に置き換える仕組み
+バインド機構|bind_mechanism.json|プレースホルダと値を結びつける仕組み
+プリペアドステートメント|prepared_statement.json|SQLインジェクションを防ぐための安全なSQL実行方法
+ディレクトリトラバーサル|directory_traversal.json|不正に上位ディレクトリへアクセスする攻撃手法
+コマンドインジェクション|command_injection.json|外部コマンドを不正に実行させる攻撃手法
+信頼性|reliability.json|障害が少なく、安定して動作する性質
+可用性|availability.json|必要な時にシステムが利用可能である性質
+保守性|maintainability.json|修正や改善が容易にできる性質
+完全性|integrity.json|データが改ざんされず正確である性質
+安全性|safety.json|利用者やシステムを危険から守る性質
+MTTR(平均処理時間)|MTTR.json|障害発生から復旧までにかかる平均時間
+MTBF(平均故障時間)|MTBF.json|故障と故障の間の平均稼働時間
 EOF
-  echo "作成しました: $FILE"
-done
