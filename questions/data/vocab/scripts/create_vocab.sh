@@ -4,7 +4,6 @@ set -euo pipefail
 OUTPUT_DIR="/Users/kentaroyoshizumi/Desktop/RissDojo/questions/data/vocab"
 mkdir -p "$OUTPUT_DIR"
 
-# word|filename|description の形式で列挙して最後にEOFで閉じる
 while IFS="|" read -r word filename description; do
   filepath="$OUTPUT_DIR/$filename"
   cat > "$filepath" <<JSON
@@ -15,31 +14,42 @@ while IFS="|" read -r word filename description; do
 JSON
   echo "作成しました: $filepath"
 done <<'EOF'
-IPS(Intrusion Prevention System)|IPS.json|不正な通信を検知し、遮断まで行うシステム
-IDS(Intrusion Detection System)|IDS.json|不正アクセスを検知するシステム
-ホスト型IDS|host_based_IDS.json|特定の端末やサーバ上で動作し、不正アクセスを検知するIDS
-ネットワーク型IDS|network_based_IDS.json|ネットワークトラフィックを監視して不正を検知するIDS
-インラインモード|inline_mode.json|通信経路上に設置して不正を直接遮断する動作モード
-プロミスキャスモード|promiscuous_mode.json|全てのパケットを受信して監視するモード
-Misuse検知法|misuse_detection.json|既知の攻撃パターンに基づき不正を検知する手法
-Anomaly検知法|anomaly_detection.json|通常と異なる挙動を異常として検知する手法
-IDP(Intrusion Detection and Prevention system)|IDP.json|IDSとIPSの機能を兼ね備えたシステム
-フォールスポジティブ|false_positive.json|正常な通信を誤って攻撃と判定すること
-フォールスネガティブ|false_negative.json|攻撃を誤って正常と判定してしまうこと
-ハニーポット|honeypot.json|攻撃者を誘導して調査するための疑似システム
-コリジョンドメイン|collision_domain.json|同一ネットワークで衝突が発生する領域
-サニタイジング|sanitizing.json|入力値を安全に処理するために不要・危険な部分を除去すること
-エスケープ処理|escape_processing.json|特殊文字を無害化するための処理
-プレースホルダ|placeholder.json|SQL文などで変数部分を一時的に置き換える仕組み
-バインド機構|bind_mechanism.json|プレースホルダと値を結びつける仕組み
-プリペアドステートメント|prepared_statement.json|SQLインジェクションを防ぐための安全なSQL実行方法
-ディレクトリトラバーサル|directory_traversal.json|不正に上位ディレクトリへアクセスする攻撃手法
-コマンドインジェクション|command_injection.json|外部コマンドを不正に実行させる攻撃手法
-信頼性|reliability.json|障害が少なく、安定して動作する性質
-可用性|availability.json|必要な時にシステムが利用可能である性質
-保守性|maintainability.json|修正や改善が容易にできる性質
-完全性|integrity.json|データが改ざんされず正確である性質
-安全性|safety.json|利用者やシステムを危険から守る性質
-MTTR(平均処理時間)|MTTR.json|障害発生から復旧までにかかる平均時間
-MTBF(平均故障時間)|MTBF.json|故障と故障の間の平均稼働時間
+フォールトアボイダンス|fault_avoidance.json|故障が発生しないように設計・運用で予防すること
+フォールトトレランス|fault_tolerance.json|故障が発生してもシステム全体が継続動作できる仕組み
+フェールセーフ|fail_safe.json|故障時に安全側に動作を移す仕組み
+フェールオーバー|failover.json|障害発生時に自動的に待機系へ切り替える仕組み
+RAID|RAID.json|複数のディスクを組み合わせて冗長性や性能を高める技術
+フェールソフト|fail_soft.json|障害が起きても必要最小限の機能を残して動作を続ける仕組み
+フールプルーフ|fool_proof.json|利用者が誤操作しても安全に動作する仕組み
+フォールトマスキング|fault_masking.json|故障が発生しても外部からは正常に見えるようにする仕組み
+故障予防|failure_prevention.json|故障が起きないよう事前に対策すること
+UPS(Uninterruptible Power Supply)|UPS.json|停電時に一時的に電力を供給する装置
+CVCF(Constant-Voltage Constsnt-Frequency)|CVCF.json|電圧と周波数を一定に保つ電源装置
+パリティチェック|parity_check.json|データの誤りを検出するための検査方式
+世代管理|generation_management.json|複数世代のバックアップを管理する手法
+センドバック保守|send_back_maintenance.json|故障品をメーカーへ返送して修理する保守方式
+オンサイト保守|on_site_maintenance.json|保守員が現地へ訪問して修理する方式
+故障監視|failure_monitoring.json|システムの稼働状況を監視して故障を検出すること
+故障復旧|failure_recovery.json|故障からシステムを復旧させること
+ナレッジマネジメント|knowledge_management.json|組織内の知識を共有・活用する管理手法
+FMEA(Failure Mode and Effect Analysis)|FMEA.json|故障モードとその影響を分析する手法
+FTA(Fault Tree Analysis)|FTA.json|故障要因をツリー構造で解析する手法
+性能管理|performance_management.json|システム性能を維持・改善するための管理
+バックアップ|backup.json|データを保護するために別の媒体へ保存すること
+リストア|restore.json|バックアップからデータを復元すること
+バックアップ計画|backup_plan.json|バックアップの方針・頻度・方法を定めた計画
+フルバックアップ|full_backup.json|全てのデータを対象にしたバックアップ
+増分バックアップ|incremental_backup.json|前回以降に変更されたデータだけを保存するバックアップ
+差分バックアップ|differential_backup.json|フルバックアップ以降に変更されたデータを保存する方式
+守秘義務条項|confidentiality_clause.json|秘密保持を契約上で義務づける条項
+消磁|demagnetization.json|磁気データを完全に消去すること
+廃棄管理|disposal_management.json|不要になった機器やデータを安全に廃棄すること
+業務継続性|business_continuity.json|障害や災害時にも業務を継続できる性質
+遠隔地保存|remote_storage.json|災害対策のため遠隔地にデータを保管すること
+IDA(Internet Data Center)|IDC.json|インターネットサービス用の大規模データセンター
+NAS(Network Attached Storage)|NAS.json|ネットワーク経由で利用する外部ストレージ
+SAN(Storage Area Network)|SAN.json|専用ネットワークを使ってストレージを接続する方式
+SCSI-3|SCSI3.json|SCSI規格の第三世代で高性能なデータ転送を実現する方式
+Fiber Channel|fiber_channel.json|高速データ転送を実現するストレージ接続規格
+データ爆発|data_explosion.json|急激なデータ量増加の現象
 EOF
