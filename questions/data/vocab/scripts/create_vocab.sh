@@ -4,8 +4,45 @@ set -euo pipefail
 OUTPUT_DIR="/Users/kentaroyoshizumi/Desktop/RissDojo/questions/data/vocab"
 mkdir -p "$OUTPUT_DIR"
 
-while IFS="|" read -r word filename description; do
-  filepath="$OUTPUT_DIR/$filename"
+# 単語リスト（英語ファイル名 | 日本語の単語 | 簡単な説明）
+cat <<EOF | while IFS="|" read -r filename word description
+syslog_protocol|syslogプロトコル|システムログを送信するプロトコル
+syslog_process|syslogプロセス|syslogの処理を行うプロセス
+syslogd_process|syslogdプロセス|syslogメッセージを管理するデーモン
+ntp|NTP(Network Time Protocol)|時刻同期のためのプロトコル
+sntp|SNTP(Simple Network Time Protocol)|簡易版のNTP
+asset_ledger|資産管理台帳|IT資産を記録する台帳
+hub_network|ハブ型ネットワーク|ハブを中心に接続するネットワーク
+snmp|SNMP|ネットワーク機器の監視プロトコル
+load_share|ロードシェアシステム|負荷分散システム
+management_pdu|管理情報(PDU)|SNMPで使うプロトコルデータユニット
+mib|MIB|SNMPで管理される情報ベース
+rmon|RMON|SNMPの拡張監視仕様
+trap_pdu|Trap(PDUの一種)|SNMPで通知に使うPDU
+trusted_os|Trusted OS|セキュリティ機能を強化したOS
+tcsec|TCSEC|米国のセキュリティ評価基準
+secure_os|セキュアOS|セキュリティ機能が組み込まれたOS
+least_privilege|minimal特権|必要最小限の権限で運用する考え方
+selinux|SELinux|Linuxのセキュリティ強化機能
+te|TE(Type Enforcement)|SELinuxの強制アクセス制御方式
+rbac|RBAC(Role Based Access Control)|役割に基づくアクセス制御
+cloud_computing|クラウドコンピューティング|インターネット経由で提供される計算資源
+sla|SLA|サービス品質保証契約
+slo|SLO|サービス品質目標
+casb|CASB(Cloud Access Security Broker)|クラウド利用を監視・制御する仕組み
+iaas|IaaS|クラウドで提供されるインフラ
+paas|PaaS|クラウドで提供される開発環境
+saas|SaaS|クラウドで提供されるソフトウェア
+jisx9401|JIS X 9401|日本のクラウド関連規格
+byod|BYOD(Bring Your Own Device)|私物端末を業務利用する形態
+thin_client|シンクライアント|処理をサーバー側に依存する端末
+mdm|MDM(Mobile Device Management)|モバイル端末の管理システム
+shadow_it|シャドーIT|管理外のIT利用
+biometric|生体認証|指紋や顔などによる認証
+principle_of_least_privilege|最小権限の原則|必要最低限の権限のみを付与する原則
+EOF
+do
+  filepath="$OUTPUT_DIR/${filename}.json"
   cat > "$filepath" <<JSON
 {
   "word": "$word",
@@ -13,43 +50,4 @@ while IFS="|" read -r word filename description; do
 }
 JSON
   echo "作成しました: $filepath"
-done <<'EOF'
-フォールトアボイダンス|fault_avoidance.json|故障が発生しないように設計・運用で予防すること
-フォールトトレランス|fault_tolerance.json|故障が発生してもシステム全体が継続動作できる仕組み
-フェールセーフ|fail_safe.json|故障時に安全側に動作を移す仕組み
-フェールオーバー|failover.json|障害発生時に自動的に待機系へ切り替える仕組み
-RAID|RAID.json|複数のディスクを組み合わせて冗長性や性能を高める技術
-フェールソフト|fail_soft.json|障害が起きても必要最小限の機能を残して動作を続ける仕組み
-フールプルーフ|fool_proof.json|利用者が誤操作しても安全に動作する仕組み
-フォールトマスキング|fault_masking.json|故障が発生しても外部からは正常に見えるようにする仕組み
-故障予防|failure_prevention.json|故障が起きないよう事前に対策すること
-UPS(Uninterruptible Power Supply)|UPS.json|停電時に一時的に電力を供給する装置
-CVCF(Constant-Voltage Constsnt-Frequency)|CVCF.json|電圧と周波数を一定に保つ電源装置
-パリティチェック|parity_check.json|データの誤りを検出するための検査方式
-世代管理|generation_management.json|複数世代のバックアップを管理する手法
-センドバック保守|send_back_maintenance.json|故障品をメーカーへ返送して修理する保守方式
-オンサイト保守|on_site_maintenance.json|保守員が現地へ訪問して修理する方式
-故障監視|failure_monitoring.json|システムの稼働状況を監視して故障を検出すること
-故障復旧|failure_recovery.json|故障からシステムを復旧させること
-ナレッジマネジメント|knowledge_management.json|組織内の知識を共有・活用する管理手法
-FMEA(Failure Mode and Effect Analysis)|FMEA.json|故障モードとその影響を分析する手法
-FTA(Fault Tree Analysis)|FTA.json|故障要因をツリー構造で解析する手法
-性能管理|performance_management.json|システム性能を維持・改善するための管理
-バックアップ|backup.json|データを保護するために別の媒体へ保存すること
-リストア|restore.json|バックアップからデータを復元すること
-バックアップ計画|backup_plan.json|バックアップの方針・頻度・方法を定めた計画
-フルバックアップ|full_backup.json|全てのデータを対象にしたバックアップ
-増分バックアップ|incremental_backup.json|前回以降に変更されたデータだけを保存するバックアップ
-差分バックアップ|differential_backup.json|フルバックアップ以降に変更されたデータを保存する方式
-守秘義務条項|confidentiality_clause.json|秘密保持を契約上で義務づける条項
-消磁|demagnetization.json|磁気データを完全に消去すること
-廃棄管理|disposal_management.json|不要になった機器やデータを安全に廃棄すること
-業務継続性|business_continuity.json|障害や災害時にも業務を継続できる性質
-遠隔地保存|remote_storage.json|災害対策のため遠隔地にデータを保管すること
-IDA(Internet Data Center)|IDC.json|インターネットサービス用の大規模データセンター
-NAS(Network Attached Storage)|NAS.json|ネットワーク経由で利用する外部ストレージ
-SAN(Storage Area Network)|SAN.json|専用ネットワークを使ってストレージを接続する方式
-SCSI-3|SCSI3.json|SCSI規格の第三世代で高性能なデータ転送を実現する方式
-Fiber Channel|fiber_channel.json|高速データ転送を実現するストレージ接続規格
-データ爆発|data_explosion.json|急激なデータ量増加の現象
-EOF
+done
