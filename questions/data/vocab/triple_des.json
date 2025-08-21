@@ -1,0 +1,4 @@
+{
+    "word": "TripleDES",
+    "description": "DESを3回適用して強度を高めた暗号方式。"
+}

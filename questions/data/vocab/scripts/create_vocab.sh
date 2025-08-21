@@ -1,42 +1,41 @@
 #!/bin/bash
-set -euo pipefail
 
 OUTPUT_DIR="/Users/kentaroyoshizumi/Desktop/RissDojo/questions/data/vocab"
 mkdir -p "$OUTPUT_DIR"
 
-# 単語リスト: ファイル名|単語|説明
-cat <<EOF | while IFS="|" read -r filename word description
-confidentiality|機密性|情報が許可されていない人に漏れないように保護すること
-availability|可用性|必要なときにシステムや情報を利用できる性質
-jis_q_27001|JIS Q 27001|情報セキュリティマネジメントシステムの国際規格
-access_control|アクセスコントロール|利用者の権限に応じてシステムや情報へのアクセスを制御する仕組み
-isms_certification|ISMS認証|JIS Q 27001に基づいて運用されていることを第三者が認証する制度
-accountability|責任追跡性|誰がいつ何をしたかを追跡できる性質
-authenticity|真正性|正当な送信者や情報であることを保証する性質
-reliability|信頼性|システムが意図した通りに動作し続ける性質
-profit|プロフィット|企業活動によって得られる利益
-balance_point|バランスポイント|コストと効果のバランスが取れる点
-roi|ROI(Return On Investment)|投資収益率を表す指標
-vulnerability|脆弱性|システムやソフトに存在する弱点
-facility_check|ファシリティチェック|施設や設備の安全性を確認する作業
-unauthorized_access_law|不法アクセス禁止法|不正にシステムへ侵入することを禁止する法律
-physical_vulnerability|物理的脆弱性|地震や火災など物理的要因による弱点
-technical_vulnerability|技術的脆弱性|ソフトウェアやハードウェアに存在する技術的な弱点
-sfa|SFA(Sales Force Automation)|営業活動を効率化するシステム
-broken_windows_theory|割れ窓理論|小さな問題を放置すると大きな問題に発展するという考え方
-security_hole|セキュリティホール|プログラムの不備によるセキュリティ上の穴
-defect|瑕疵|製品やサービスに存在する欠陥
-buffer_overflow|バッファオーバーフロー|メモリ領域を超えてデータを書き込み不正動作を起こす脆弱性
-security_literacy|セキュリティリテラシ|セキュリティに関する正しい知識と判断力
-hacktivism|ハクティビズム|政治的・社会的主張のために行われるハッキング活動
+# 単語リスト: "日本語,英語ファイル名,説明"
+cat <<EOF | while IFS=',' read -r word filename description
+トレードオフ,trade_off,ある要素を優先すると別の要素が犠牲になる関係。
+平文,plaintext,暗号化されていない読み取り可能なデータ。
+復号,decryption,暗号化されたデータを元の平文に戻す処理。
+共通鍵暗号方式,symmetric_key_encryption,送信者と受信者が同じ鍵を使う暗号方式。
+公開鍵暗号方式,public_key_encryption,公開鍵で暗号化し秘密鍵で復号する暗号方式。
+CRYPTREC,cryptrec,日本の暗号技術評価委員会。安全な暗号リストを策定。
+NICT,nict,情報通信研究機構。日本の情報通信分野の研究機関。
+DES(Data Encryption Standard),des_standard,古典的な共通鍵暗号方式で現在は安全性に問題あり。
+転置,transposition,文字の順序を入れ替えて暗号化する方式。
+換字,substitution,文字を他の文字に置き換えて暗号化する方式。
+AES(Advanced Encryption Standard),aes_standard,現在主流の強力な共通鍵暗号方式。
+TripleDES,triple_des,DESを3回適用して強度を高めた暗号方式。
+AES-CBC,aes_cbc,AESの動作モードの一つでブロックを連鎖的に暗号化する。
+AES-CTR,aes_ctr,AESの動作モードの一つでカウンタを利用する。
+PQC(Post-Quantum Cryptography),post_quantum_crypto,量子コンピュータ時代に安全な暗号方式。
+ムーアの法則,moores_law,半導体集積度が約18か月で2倍になる経験則。
+RSA,rsa,代表的な公開鍵暗号方式。大きな素因数分解を困難とする。
+ボトルネック,bottleneck,システム全体の性能を制約する要素。
+量子暗号,quantum_cryptography,量子力学を利用した安全性の高い暗号通信。
+Diffie Hellman鍵交換アルゴリズム(DH),diffie_hellman_key_exchange,安全に共通鍵を共有するための鍵交換方式。
+前方秘匿性,forward_secrecy,過去の通信内容が将来の鍵漏洩でも解読されない性質。
+後方秘匿性,backward_secrecy,新しい鍵が漏洩しても過去の通信が守られる性質。
 EOF
+
 do
-  filepath="$OUTPUT_DIR/${filename}.json"
+  filepath="$OUTPUT_DIR/$filename.json"
   cat > "$filepath" <<JSON
 {
-  "word": "$word",
-  "description": "$description"
+    "word": "$word",
+    "description": "$description"
 }
 JSON
-  echo "作成しました: $filepath"
+  echo "Created: $filepath"
 done

@@ -1,0 +1,4 @@
+{
+    "word": "AES-CTR",
+    "description": "AESの動作モードの一つでカウンタを利用する。"
+}
