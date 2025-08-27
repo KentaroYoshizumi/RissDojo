@@ -1,0 +1,4 @@
+{
+    "word": "CRL(Certificate Revocation List)",
+    "description": "失効した証明書の一覧を認証局が公開する仕組み。"
+}

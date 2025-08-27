@@ -1,4 +1,1 @@
-{
-    "word": "OpenID",
-    "description": "模範解答をここに記入してください"
-}
+{ "word": "OpenID", "description": "分散型の認証方式で、複数のサービス間で共通のIDを利用できる仕組み" }

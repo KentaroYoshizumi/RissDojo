@@ -1,0 +1,4 @@
+{
+    "word": "OCSP(Online Certificate Status Protocol)",
+    "description": "証明書の有効性をリアルタイムで確認するためのプロトコル。"
+}
