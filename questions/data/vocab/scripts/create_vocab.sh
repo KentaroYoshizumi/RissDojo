@@ -1,29 +1,37 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 OUTPUT_DIR="/Users/kentaroyoshizumi/Desktop/RissDojo/questions/data/vocab"
 mkdir -p "$OUTPUT_DIR"
 
-# filename|word|description
-while IFS='|' read -r fname word desc; do
-  [ -z "$fname" ] && continue  # 空行スキップ
+# 単語リスト：filename|word|description
+VOCAB_LIST=(
+  "service_management|サービスマネジメント|ITサービスを計画・提供・運用・改善する一連の活動。"
+  "sla|SLA(Service Level Agreement)|サービス提供者と利用者間で合意されたサービス品質を定める文書。"
+  "ola|OLA|組織内の部門間で取り交わすサービス品質に関する合意。"
+  "itil|ITIL(Information Technology Infrastructure Library)|ITサービスマネジメントのベストプラクティスを体系化したフレームワーク。"
+  "jis_q_20000|JIS Q 20000|ITサービスマネジメントに関する日本工業規格。"
+  "jis_q_20000_1|JIS Q 20000-1|ITサービスマネジメントシステムに関する要求事項を定めた日本工業規格。"
+  "help_desk|ヘルプデスク|利用者からの問い合わせや問題を受付・対応する窓口。"
+  "service_desk|サービスデスク|ITサービスの提供・問い合わせ・障害対応を行う窓口。"
+  "local_service_desk|ローカルサービスデスク|特定拠点でのみ運用されるサービスデスク。"
+  "central_service_desk|中央サービスデスク|組織全体を対象としたサービスデスク。"
+  "virtual_service_desk|ヴァーチャルサービスデスク|リモートやオンラインで提供されるサービスデスク。"
+  "follow_the_sun|フォロー・ザ・サン|世界中のタイムゾーンを活用した24時間サポート体制。"
+  "facility_management|ファシリティマネジメント|施設や設備の運用・保守・改善活動。"
+  "ups|UPS(Uninterruptible Power Supply)|停電時に一定時間電源を供給する装置。"
+  "pbl|PBL(Project Based Learning)|課題解決型学習の教育手法。"
+  "cafeteria|カフェテリア方式|従業員が選択的に福利厚生を利用できる方式。"
+  "faq|FAQ(Frequently Asked Question)|よくある質問とその回答の一覧。"
+  "probability_of_occurrence|発生確率|特定の事象が発生する可能性の度合い。"
+  "acceptance_level|受容水準|リスクを許容できる水準。"
+  "jis_q_31000|JIS Q 31000|リスクマネジメントに関する日本工業規格。"
+)
+
+# ループで JSON ファイルを作成
+for item in "${VOCAB_LIST[@]}"; do
+  IFS='|' read -r fname word desc <<< "$item"
   file="$OUTPUT_DIR/$fname.json"
   printf '{\n  "word": "%s",\n  "description": "%s"\n}\n' "$word" "$desc" > "$file"
   echo "Created: $file"
-done <<'EOF'
-certification_audit|認証審査|規格や基準適合を第三者が審査する。
-surveillance_audit|維持審査(サーベイランス)|認証維持のための定期審査。
-renewal_audit|更新審査|認証の有効期限更新のための再審査。
-followup_audit|フォローアップ監査|不適合の是正状況を確認する監査。
-iso_iec_15408|ISO/IEC 15408|情報セキュリティ評価基準（Common Criteria）。
-facility_check|ファシリティチェック|設備・環境を確認しリスクを評価する。
-volume_license|ボリュームライセンス|多数端末向けの一括ソフトウェアライセンス。
-site_license|サイトライセンス|組織/拠点単位で包括的に使えるライセンス。
-penetration_test|ペネトレーションテスト|攻撃を模して脆弱性を確認するテスト。
-security_patch|セキュリティパッチ|脆弱性を修正するソフトウェア更新。
-jpcert_cc|JPCERT/CC|日本のインシデント対応機関。
-exploit_code|Exploitコード|脆弱性を悪用するためのコード。
-zero_day_attack|ゼロデイ攻撃|未公開・未修正の脆弱性を突く攻撃。
-audit_trail|監査証跡|操作履歴を追跡可能にする記録。
-audit_criteria|監査基準|監査で用いる評価基準・要件。
-EOF
+done
