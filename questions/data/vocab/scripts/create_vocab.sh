@@ -4,31 +4,25 @@ set -e
 OUTPUT_DIR="/Users/kentaroyoshizumi/Desktop/RissDojo/questions/data/vocab"
 mkdir -p "$OUTPUT_DIR"
 
-# 単語リスト：filename|word|description
+# 単語リスト: filename|word|description
 VOCAB_LIST=(
-  "service_management|サービスマネジメント|ITサービスを計画・提供・運用・改善する一連の活動。"
-  "sla|SLA(Service Level Agreement)|サービス提供者と利用者間で合意されたサービス品質を定める文書。"
-  "ola|OLA|組織内の部門間で取り交わすサービス品質に関する合意。"
-  "itil|ITIL(Information Technology Infrastructure Library)|ITサービスマネジメントのベストプラクティスを体系化したフレームワーク。"
-  "jis_q_20000|JIS Q 20000|ITサービスマネジメントに関する日本工業規格。"
-  "jis_q_20000_1|JIS Q 20000-1|ITサービスマネジメントシステムに関する要求事項を定めた日本工業規格。"
-  "help_desk|ヘルプデスク|利用者からの問い合わせや問題を受付・対応する窓口。"
-  "service_desk|サービスデスク|ITサービスの提供・問い合わせ・障害対応を行う窓口。"
-  "local_service_desk|ローカルサービスデスク|特定拠点でのみ運用されるサービスデスク。"
-  "central_service_desk|中央サービスデスク|組織全体を対象としたサービスデスク。"
-  "virtual_service_desk|ヴァーチャルサービスデスク|リモートやオンラインで提供されるサービスデスク。"
-  "follow_the_sun|フォロー・ザ・サン|世界中のタイムゾーンを活用した24時間サポート体制。"
-  "facility_management|ファシリティマネジメント|施設や設備の運用・保守・改善活動。"
-  "ups|UPS(Uninterruptible Power Supply)|停電時に一定時間電源を供給する装置。"
-  "pbl|PBL(Project Based Learning)|課題解決型学習の教育手法。"
-  "cafeteria|カフェテリア方式|従業員が選択的に福利厚生を利用できる方式。"
-  "faq|FAQ(Frequently Asked Question)|よくある質問とその回答の一覧。"
-  "probability_of_occurrence|発生確率|特定の事象が発生する可能性の度合い。"
-  "acceptance_level|受容水準|リスクを許容できる水準。"
-  "jis_q_31000|JIS Q 31000|リスクマネジメントに関する日本工業規格。"
+  "risk_assessment|リスクアセスメント|リスクを特定し、その発生可能性や影響度を評価する活動。"
+  "detailed_risk_analysis|詳細リスク分析|リスクに関してより詳細なデータやモデルを用いて行う評価手法。"
+  "matrix_chart|マトリックスチャート|複数の要素やリスクを縦軸と横軸に配置し、関係性や優先度を可視化する図表。"
+  "direct_loss|直接損失|事故や障害の発生により直接的に発生する損害。"
+  "indirect_loss|間接損失|直接損失に付随して生じる二次的な損害。"
+  "response_cost|対応費用|事故や障害への対応のために必要となる費用。"
+  "quantitative_risk_evaluation|定量的リスク評価|リスクを数値や金額で定量的に表す評価手法。"
+  "qualitative_risk_evaluation|定性的リスク評価|リスクを高・中・低などの段階で表す評価手法。"
+  "risk_control|リスクコントロール|リスクを管理・低減するための一連の取り組み。"
+  "risk_mitigation|リスク低減|リスクの発生確率や影響を軽減させる対策。"
+  "risk_avoidance|リスク回避|リスクの原因を排除し、発生そのものを避ける対策。"
+  "risk_retention|リスク保有|リスクを容認し、自社で負担する方針。"
+  "risk_transfer|リスク移転|保険契約などによりリスクを第三者に移す方法。"
+  "contingency_plan|コンティンジェンシープラン|予期せぬ事態に備えた代替計画。"
 )
 
-# ループで JSON ファイルを作成
+# JSONファイル作成ループ
 for item in "${VOCAB_LIST[@]}"; do
   IFS='|' read -r fname word desc <<< "$item"
   file="$OUTPUT_DIR/$fname.json"
