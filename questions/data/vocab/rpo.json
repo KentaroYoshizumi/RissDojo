@@ -1,0 +1,4 @@
+{
+  "word": "RPO(Recovery Point Objective)",
+  "description": "障害発生時に復旧できるデータの最新時点を示す目標。"
+}

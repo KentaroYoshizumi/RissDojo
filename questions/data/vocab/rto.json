@@ -1,0 +1,4 @@
+{
+  "word": "RTO(Recovery Time Objective)",
+  "description": "システム障害から復旧するまでに許容される最長時間。"
+}
