@@ -6,15 +6,21 @@ mkdir -p "$OUTPUT_DIR"
 
 # 単語リスト: filename|word|description
 VOCAB_LIST=(
-  "security_incident|セキュリティインシデント|情報セキュリティに関する事故や脅威が発生した事象。"
-  "triage|トリアージ|インシデントや障害の優先度を迅速に判断し、対応の順序を決定すること。"
-  "snapshot|スナップショット|システムやデータのある時点の状態を保存したコピー。"
-  "ping_pong_infection|ピンポン感染|コンピュータウイルスが相互に感染し合うことで再発を繰り返す現象。"
-  "digital_forensics|デジタルフォレンジックス|デジタル機器やデータを調査・分析し、不正の証拠を収集する技術。"
-  "bcp|BCP(Business Continuity Plan)|災害や障害時に重要業務を継続するための計画。"
-  "bcm|BCM(Business Continuity Management)|事業継続計画(BCP)を策定・運用・改善するための管理プロセス。"
-  "rto|RTO(Recovery Time Objective)|システム障害から復旧するまでに許容される最長時間。"
-  "rpo|RPO(Recovery Point Objective)|障害発生時に復旧できるデータの最新時点を示す目標。"
+  "iso_19011|ISO 19011|マネジメントシステムの監査に関する国際規格。監査の指針を提供する。"
+  "system_audit|システム監査|情報システムの有効性、効率性、安全性を評価する監査活動。"
+  "internal_control|内部統制|業務の有効性や法令遵守を確保するための組織的仕組み。"
+  "forensics|フォレンジックス|不正や犯罪の証拠を収集・分析する技術や手法。"
+  "it_control|IT統制|内部統制の一部で、IT環境に関わるリスクを管理する仕組み。"
+  "system_management_standard|システム管理基準|情報システムの適切な管理を行うための指針。"
+  "system_audit_standard|システム監査基準|システム監査を行う際の基本的な基準や手順を定めたもの。"
+  "detailed_control_measures|詳細管理策|情報セキュリティ対策を具体的に実施するための個別施策。"
+  "audit_working_paper|監査調書|監査の過程や根拠を記録した文書。"
+  "sampling|サンプリング|監査や調査で一部を抽出して検証を行う手法。"
+  "auditability|可監査性|監査を実施可能にするための記録や仕組みの整備度。"
+  "mid_long_term_plan|中長期計画書|組織の中期・長期的な方針や目標を示した計画書。"
+  "basic_plan|基本計画書|システムや事業運営の基本的な計画を示した文書。"
+  "individual_plan|個別計画書|特定のプロジェクトや領域に特化した計画書。"
+  "corrective_action|是正処置|問題点を改善し、再発を防止するための対応策。"
 )
 
 # JSONファイル作成ループ
